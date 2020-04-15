@@ -1,0 +1,18 @@
+:root {
+  box-sizing: border-box;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #EEE;
+}
+
+.App {
+  max-width: 1024px;
+  margin: 0 auto;
+}
