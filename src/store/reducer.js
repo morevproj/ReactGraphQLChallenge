@@ -10,7 +10,6 @@ const initialState = {
 }
 
 const getRepositories = (state, action) => {
-  console.log('U', action.username, "T:", action.token)
   return {
     ...state,
     username: action.username,
@@ -18,11 +17,11 @@ const getRepositories = (state, action) => {
     searchError: false,
     repositories: null,
     requesting: true,
+    renewId: null,
   }
 }
 
 const storeRepositories = (state, action) => {
-  console.log("Saving", state, action)
   return {
     ...state,
     searchError: false,
@@ -48,6 +47,7 @@ const saveRepositoriesRenewID = (state, action) => {
     renewId: action.renewId
   }
 }
+
 
 export default (state = initialState, action) => {
   switch(action.type) {

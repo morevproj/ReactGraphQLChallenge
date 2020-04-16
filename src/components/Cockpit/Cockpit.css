@@ -2,4 +2,5 @@
   display: flex;
   flex-flow: column;
   max-width: 300px;
+  margin: .5rem 1rem;
 }

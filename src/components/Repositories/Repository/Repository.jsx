@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from './Repository.css';
 
 
 const Repository = props => {
@@ -37,7 +38,7 @@ const Repository = props => {
   }
 
   return (
-    <div onClick={repoClickHandler}>
+    <div onClick={repoClickHandler} className={classes.Repository}>
       <h2>{props.name}</h2>
       <p><strong>Owner: </strong>{props.owner}</p>
       {props.description ? 

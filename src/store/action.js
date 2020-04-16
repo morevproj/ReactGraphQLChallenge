@@ -35,7 +35,8 @@ query getRepos($username: String!){
 }
 `
 
-export const getRepositories = (username, token) => {
+export const getRepositories = (username, token, renewId) => {
+  if (renewId) clearTimeout(renewId);
   return {
     username,
     token,
@@ -44,9 +45,6 @@ export const getRepositories = (username, token) => {
 }
 
 export const storeRepositories = (repositories) => {
-
-  // console.log('Repos', repositories);
-
   return {
     type: actionTypes.STORE_REPOSITORIES,
     repositories: repositories
@@ -67,16 +65,9 @@ const saveRepositoriesRenewID = id => {
 }
 
 
-const repositoriesAutoRenew = (autoRenewId) => {
-  return dispatch => {
-    saveRepositoriesRenewID(autoRenewId)
-  }
-}
-
 export const fetchRepositories = (username, token) => {
-  return dispatch => {
-    dispatch(getRepositories(username, token));
-    console.log('Fetching');
+  return (dispatch, getState) => {
+    dispatch(getRepositories(username, token, getState().renewId));
     apolloClient.query({
       query: REPOSITORIES_QUERY,
       variables: {
@@ -89,15 +80,13 @@ export const fetchRepositories = (username, token) => {
       }
     }).then(result => {
       const repositories = result.data.user.repositories.nodes;
-      console.log('Success', repositories)
       dispatch(storeRepositories(repositories));
-      // Not perfect, should be changed
-      dispatch(repositoriesAutoRenew(
-        setTimeout(() => fetchRepositories(username, token), 60000)
-      ))
+      // Bad, should be changed
+      const id = setTimeout(() => dispatch(fetchRepositories(username, token)), 60000);
+      dispatch(saveRepositoriesRenewID(id));
     })
       .catch(err => {
-        console.log('Error', err);
+        dispatch(resetRepositoriesRenewID());
         dispatch(loadingFailed());
     })
   }

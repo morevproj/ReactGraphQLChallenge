@@ -2,8 +2,6 @@ import React, { useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Repository from './Repository/Repository';
 
-import * as actions from '../../store/action';
-
 
 const Repositories = props => {;
   const requesting = useSelector(state => state.requesting);
@@ -13,10 +11,10 @@ const Repositories = props => {;
   console.log(useSelector(state => state));
   if (!repositories && !error) {
     return <div className={'Home'}>
-      <h2>If you want get info about user repositories:</h2>
+      <h2>If you want to get info about user repositories:</h2>
       <ol>
-        <li>Enter token and save it</li>
-        <li>Enter github user's username and submit </li>
+        <li>Enter the token</li>
+        <li>Enter the github user's username and submit </li>
       </ol>
     </div>
   }
