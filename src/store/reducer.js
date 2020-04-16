@@ -6,25 +6,29 @@ const initialState = {
   repositories: null,
   requesting: false,
   token: '',
+  renewId: null
 }
 
 const getRepositories = (state, action) => {
+  console.log('U', action.username, "T:", action.token)
   return {
     ...state,
     username: action.username,
     token: action.token,
     searchError: false,
     repositories: null,
-    requesting: true
+    requesting: true,
   }
 }
 
 const storeRepositories = (state, action) => {
+  console.log("Saving", state, action)
   return {
     ...state,
     searchError: false,
     repositories: action.repositories,
-    requesting: false
+    requesting: false,
+    renewId: null
   }
 }
 
@@ -34,14 +38,14 @@ const loadingFailed = state => {
     searchError: true,
     repositories: null,
     requesting: false,
-    username: '',
+    renewId: null
   }
 }
 
-const saveToken = (state, action) => {
+const saveRepositoriesRenewID = (state, action) => {
   return {
     ...state,
-    token: action.token
+    renewId: action.renewId
   }
 }
 
@@ -50,7 +54,7 @@ export default (state = initialState, action) => {
     case actionTypes.GET_REPOSITORIES: return getRepositories(state, action);
     case actionTypes.STORE_REPOSITORIES: return storeRepositories(state, action);
     case actionTypes.LOADING_FAILED: return loadingFailed(state);
-    case actionTypes.SAVE_TOKEN: return saveToken(state, action);
+    case actionTypes.SAVE_REPOSITORIES_RENEW_ID: return saveRepositoriesRenewID(state, action);
     default: return state;
   }
 }

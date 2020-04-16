@@ -8,8 +8,6 @@ import Aux from '../../hoc/Aux/Aux';
 
 
 const RepositoriesField = props => {
-  const username = useSelector(state => state.username);
-  const token = useSelector(state => state.token);
   
   return (
     <div>
@@ -17,10 +15,8 @@ const RepositoriesField = props => {
         <Route
           path='/'
           exact
-          render={(props) => <Repositories {...props} 
-                                username={username} 
-                                token={token}/>}
-                                />
+          render={(props) => <Repositories {...props}/>}
+        />
         <Route
           path='/repo/:id'
           render={(props) => <RepositoryFull {...props} />}

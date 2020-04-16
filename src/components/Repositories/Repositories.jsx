@@ -1,6 +1,6 @@
 import React, { useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
+import Repository from './Repository/Repository';
 
 import * as actions from '../../store/action';
 
@@ -10,6 +10,7 @@ const Repositories = props => {;
   const error = useSelector(state => state.searchError);
   const repositories = useSelector(state => state.repositories);
   
+  console.log(useSelector(state => state));
   if (!repositories && !error) {
     return <div className={'Home'}>
       <h2>If you want get info about user repositories:</h2>
@@ -29,7 +30,16 @@ const Repositories = props => {;
   }
   
   return <div>
-    Repos
+    {repositories.map(repo => 
+      <Repository 
+        name={repo.name}
+        key={repo.id}
+        id={repo.id}
+        owner={repo.owner.login}
+        description={repo.description}
+        updated={repo.updatedAt}
+        {...props}
+        />)}
   </div>
 }
 

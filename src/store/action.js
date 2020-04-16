@@ -8,15 +8,27 @@ query getRepos($username: String!){
   user(login: $username) {
     repositories(last: 100) {
       nodes {
+        id,
+        owner {
+          login
+        }
         name,
         updatedAt,
         createdAt,
 				description,
-        databaseId,
-        defaultBranchRef {
+        diskUsage,
+        forkCount,
+        isFork,
+        licenseInfo {
+          description
+        },
+        mergeCommitAllowed,
+        url,
+        primaryLanguage {
           name
         },
-        id,
+        pushedAt
+
       }
     }
   }
@@ -32,16 +44,32 @@ export const getRepositories = (username, token) => {
 }
 
 export const storeRepositories = (repositories) => {
-  // some trick to get clear data
+
+  // console.log('Repos', repositories);
+
   return {
-    type: actionTypes.GET_REPOSITORIES,
-    repos: repositories
+    type: actionTypes.STORE_REPOSITORIES,
+    repositories: repositories
   }
 }
 
 export const loadingFailed = () => {
   return {
     type: actionTypes.LOADING_FAILED
+  }
+}
+
+const saveRepositoriesRenewID = id => {
+  return {
+    type: actionTypes.SAVE_REPOSITORIES_RENEW_ID,
+    renewId: id
+  }
+}
+
+
+const repositoriesAutoRenew = (autoRenewId) => {
+  return dispatch => {
+    saveRepositoriesRenewID(autoRenewId)
   }
 }
 
@@ -59,15 +87,22 @@ export const fetchRepositories = (username, token) => {
           Authorization: `bearer ${token}`,
         }
       }
-    }).then(result => console.log(result))
-      .catch(err => console.log(err))
+    }).then(result => {
+      const repositories = result.data.user.repositories.nodes;
+      console.log('Success', repositories)
+      dispatch(storeRepositories(repositories));
+      // Not perfect, should be changed
+      dispatch(repositoriesAutoRenew(
+        setTimeout(() => fetchRepositories(username, token), 60000)
+      ))
+    })
+      .catch(err => {
+        console.log('Error', err);
+        dispatch(loadingFailed());
+    })
   }
 }
 
-export const saveToken = token => {
-  console.log(token)
-  return {
-    type: actionTypes.SAVE_TOKEN,
-    token
-  }
-}
+
+
+
