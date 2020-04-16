@@ -1,0 +1,5 @@
+.CockpitForm {
+  display: flex;
+  flex-flow: column;
+  max-width: 300px;
+}

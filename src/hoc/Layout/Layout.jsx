@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-
+import React from 'react';
 
 import classes from './Layout.css'
 
+
 const Layout = props => {
   return (
-    <Fragment>
-      <div>NavField</div>
+    <div>
       {props.children}
-    </Fragment>)
+    </div>)
 }
+
 
 export default Layout;

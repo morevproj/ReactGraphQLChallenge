@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = true;
 const isProd = !isDev;
 
 const filename = ext => (isDev) ? `[name].${ext}` : `[name].[hash].${ext}`;
@@ -44,9 +44,10 @@ module.exports = {
     }
   },
   devServer: {
-    port: 3000,
+    port: 8080,
     hot: true,
     historyApiFallback: true,
+    disableHostCheck: true
   },
   plugins: [
     new HTMLWebpackPlugin({
