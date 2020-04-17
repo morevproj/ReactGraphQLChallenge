@@ -1,10 +1,8 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import RepositoryFull from '../Repositories/RepositoryFull/RepositoryFull';
 import Repositories from '../Repositories/Repositories';
-import Aux from '../../hoc/Aux/Aux';
 
 
 const RepositoriesField = props => {

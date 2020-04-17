@@ -24,7 +24,7 @@ const storeRepositories = (state, action) => {
   return {
     ...state,
     searchError: false,
-    repositories: action.repositories,
+    repositories: [...action.repositories],
     requesting: false,
     renewId: null
   }
