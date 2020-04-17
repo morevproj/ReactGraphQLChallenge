@@ -15,7 +15,6 @@ const getRepositories = (state, action) => {
     username: action.username,
     token: action.token,
     searchError: false,
-    repositories: null,
     requesting: true,
     renewId: null,
   }
@@ -35,7 +34,6 @@ const loadingFailed = state => {
   return {
     ...state,
     searchError: true,
-    repositories: null,
     requesting: false,
     renewId: null
   }

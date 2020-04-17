@@ -8,7 +8,6 @@ const Repositories = props => {;
   const error = useSelector(state => state.searchError);
   const repositories = useSelector(state => state.repositories);
   
-  console.log(useSelector(state => state));
   if (!repositories && !error) {
     return <div className={'Home'}>
       <h2>If you want to get info about user repositories:</h2>

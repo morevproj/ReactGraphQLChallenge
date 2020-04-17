@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import RepositoryFull from '../Repositories/RepositoryFull/RepositoryFull';
@@ -21,6 +21,7 @@ const RepositoriesField = props => {
           path='/repo/:id'
           render={(props) => <RepositoryFull {...props} />}
         />
+        <Redirect to='/' />
       </Switch>
       {props.children}
     </div>)

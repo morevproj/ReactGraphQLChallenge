@@ -5,3 +5,22 @@
   margin: .5rem;
   padding: 1rem;
 }
+
+.RepositoryFull > ul {
+  list-style-type: square;
+  padding: .5rem;
+}
+
+.RepositoryFull ul > li {
+  border-bottom: 1px #EEE solid;
+  margin-bottom: 1rem;
+}
+
+.UpdateTime {
+  margin-left: 2rem;
+  padding: .5rem;
+  border-radius: .5rem;
+  background-color: #EEE;
+  font-size: 1rem;
+  color: #999;
+}

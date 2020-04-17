@@ -67,6 +67,7 @@ const saveRepositoriesRenewID = id => {
 
 export const fetchRepositories = (username, token) => {
   return (dispatch, getState) => {
+    console.log("Fetching...");
     dispatch(getRepositories(username, token, getState().renewId));
     apolloClient.query({
       query: REPOSITORIES_QUERY,
@@ -79,6 +80,7 @@ export const fetchRepositories = (username, token) => {
         }
       }
     }).then(result => {
+      console.log("Fetching successful");
       const repositories = result.data.user.repositories.nodes;
       dispatch(storeRepositories(repositories));
       // Bad, should be changed
@@ -86,7 +88,7 @@ export const fetchRepositories = (username, token) => {
       dispatch(saveRepositoriesRenewID(id));
     })
       .catch(err => {
-        dispatch(resetRepositoriesRenewID());
+        console.log("Filed Fetching");
         dispatch(loadingFailed());
     })
   }

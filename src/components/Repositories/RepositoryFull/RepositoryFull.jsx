@@ -1,22 +1,33 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
+import ScrollTop from '../../UI/ScrollTop/ScrollTop';
+
+import {updatedTimeOffset} from '../../../utils/time';
+
 import classes from './RepositoryFull.css';
 
 
 const RepositoryFull = props => {
-  const repository = useSelector(state => state.repositories.find(repo => {
+  const repositoryRow = useSelector(state => state.repositories);
+  
+  if (!repositoryRow) return <Redirect to='/' />;
+  
+  const repository = repositoryRow.find(repo => {
     return repo.id === props.match.params.id;
-  }))
+  })
 
-  console.log(repository);
   if (repository.owner) repository.owner = repository.owner.login;
   if (repository.primaryLanguage) repository.primaryLanguage = repository.primaryLanguage.name;
   if (repository.licenseInfo) repository.licenseInfo = repository.licenseInfo.description;
   
+  const updated = updatedTimeOffset(repository.updatedAt);
 
   return (
     <div className={classes.RepositoryFull}>
-      <h1>{repository.name}</h1>
+      <ScrollTop />
+      <h1>{repository.name}<span className={classes.UpdateTime}>updated: {updated}</span></h1>
       <ul>
         {Object.keys(repository).map((key, ind) => {
           if (key.startsWith('__')) return null;
